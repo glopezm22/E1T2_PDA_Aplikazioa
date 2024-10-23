@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.Scanner;
 
 public class PDAfuntzionalitateak {
@@ -135,7 +136,20 @@ public class PDAfuntzionalitateak {
 	public static void fakturaSortu() {
 		System.out.print("Sartu eskariaren kodea: ");
 		String kodeaBilatu = sc.nextLine();
+		System.out.print("Sartu eskariaren lerroa 1-9: ");
+		String lerroaBilatu = sc.nextLine();
 		boolean aurkituta = false;
+		String kodea = "";
+		String lerroa = "";
+		String bezeroa = "";
+		String bezeroId = "";
+		String izena = "";
+		String abizena = "";
+		String eskaera_data = "";
+		String produktuId = "";
+		String kopurua = "";
+		String salmenta = "";
+		String salmentaBorobildu = "";
 		try {
 			FileReader fr1 = new FileReader("src/erronkaproduktua/fitxategiak/ESKARI.txt");
 			BufferedReader br1 = new BufferedReader(fr1);
@@ -147,43 +161,43 @@ public class PDAfuntzionalitateak {
 			lerroa1 = br1.readLine();
 			lerroa2 = br2.readLine();
 			lerroa3 = br3.readLine();
-			while (lerroa3 != null) {
-				String[] lerroZatiak = lerroa3.split("	");
-				String kodea = lerroZatiak[0];
-				if (kodea.equals(kodeaBilatu)) {
-					String izena = lerroZatiak[1];
-					String abizena = lerroZatiak[2];
-					
-					System.out.println("Bezeroa: " + izena + abizena);
-					aurkituta = true;
-					break;
-				}
-
-				lerroa3 = br3.readLine();
-			}
-			
 			while (lerroa1 != null) {
 				String[] lerroZatiak = lerroa1.split("	");
-				String kodea = lerroZatiak[0];
+				kodea = lerroZatiak[0];
 				if (kodea.equals(kodeaBilatu)) {
-					String bezeroId = lerroZatiak[1];
-					String egoeraId = lerroZatiak[2];
-					String eskaera_data = lerroZatiak[3];
+					bezeroId = lerroZatiak[1];
+					eskaera_data = lerroZatiak[3];
 					aurkituta = true;
 					break;
 				}
 
 				lerroa1 = br1.readLine();
 			}
-			
+
+			while (lerroa3 != null) {
+				String[] lerroZatiak = lerroa3.split("	");
+				bezeroa = lerroZatiak[0];
+				if (bezeroa.equals(bezeroId)) {
+					izena = lerroZatiak[1];
+					abizena = lerroZatiak[2];
+					aurkituta = true;
+					break;
+				}
+
+				lerroa3 = br3.readLine();
+			}
+
 			while (lerroa2 != null) {
 				String[] lerroZatiak = lerroa2.split("	");
-				String kodea = lerroZatiak[0];
-				if (kodea.equals(kodeaBilatu)) {
-					String lerroId = lerroZatiak[1];
-					String produktuId = lerroZatiak[2];
-					String kopurua = lerroZatiak[3];
-					String salmenta = lerroZatiak[4];
+				lerroa = lerroZatiak[1];
+				if (lerroa.equals(lerroaBilatu)) {
+					produktuId = lerroZatiak[2];
+					kopurua = lerroZatiak[3];
+					salmenta = lerroZatiak[4];
+					salmenta = salmenta.replace(",", ".");
+					double salmentaZbk = Double.parseDouble(salmenta);
+					DecimalFormat df = new DecimalFormat("#.00");
+					salmentaBorobildu = df.format(salmentaZbk);
 					aurkituta = true;
 					break;
 				}
@@ -197,19 +211,25 @@ public class PDAfuntzionalitateak {
 
 			br1.close();
 			fr1.close();
-			
+
 			br2.close();
 			fr2.close();
-			
+
 			br3.close();
 			fr3.close();
 
-			FileWriter fw = new FileWriter("faktura_" + "kodea" + ".txt");
+			FileWriter fw = new FileWriter("faktura_" + kodea + "_" + lerroa + ".txt");
 			BufferedWriter bw = new BufferedWriter(fw);
-			bw.write("#" + "kodea" + " eskariaren faktura");
-			bw.write("Ordaintzeko guztira: " + "totala" + "€");
+			bw.write("#" + kodea + "_" + lerroa + " eskariaren faktura");
+			bw.write("\n= = = = = = = = = = = = =");
+			bw.write("\nEskaera zenbakia: " + kodea + "_" + lerroa);
+			bw.write("\nEskaera data: " + eskaera_data);
+			bw.write("\nBezeroa: " + izena + " " + abizena);
+			bw.write("\n- - - - - - - - - - - - -");
+			bw.write("\nZehaztasunak:\n Produktua: " + produktuId + "\n Kopurua: " + kopurua + "\n Totala: "
+					+ salmentaBorobildu);
 			bw.close();
-			System.out.println("Faktura fitxategian gordeta.");
+			System.out.println("Faktura sortuta gordeta.");
 		} catch (FileNotFoundException e) {
 			System.out.println("Errorea: fitxategia ezin da aurkitu.");
 		} catch (IOException e) {
@@ -219,7 +239,6 @@ public class PDAfuntzionalitateak {
 		PDAmenu.menuBezeroak();
 	}
 
-
 	public static void fitxategienMenua() {
 		System.out.println("Fitxategien menua bistaratzen");
 		System.out.println("- LANGILE.txt");
@@ -228,7 +247,7 @@ public class PDAfuntzionalitateak {
 		System.out.println("- ESKARI.txt");
 		System.out.println("- ESKARI_LERRO.txt");
 	}
-	
+
 	public static void atzeraJoan() {
 		PDAmenu.menua();
 	}

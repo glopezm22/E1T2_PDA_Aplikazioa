@@ -1,0 +1,10 @@
+#24_4 eskariaren faktura
+= = = = = = = = = = = = =
+Eskaera zenbakia: 24_4
+Eskaera data: 07/09/2016
+Bezeroa: Mack Morse
+- - - - - - - - - - - - -
+Zehaztasunak:
+ Produktua: 138
+ Kopurua: 80
+ Totala: 645,99
