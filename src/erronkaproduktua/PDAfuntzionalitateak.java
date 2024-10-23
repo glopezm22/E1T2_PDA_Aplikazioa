@@ -28,13 +28,11 @@ public class PDAfuntzionalitateak {
 				if (kodea.equals(kodeaBilatu)) {
 					String izena = lerroZatiak[1];
 					String abizena = lerroZatiak[2];
-//					String emaila = lerroZatiak[3];
 					String telefonoa = lerroZatiak[4];
 					String kontratazio_data = lerroZatiak[5];
 
 					System.out.println("Izena: " + izena);
 					System.out.println("Abizena: " + abizena);
-//					System.out.println("Emaila: " + emaila);
 					System.out.println("Telefonoa: " + telefonoa);
 					System.out.println("Kontratazio data: " + kontratazio_data);
 					aurkituta = true;
@@ -62,10 +60,49 @@ public class PDAfuntzionalitateak {
 
 	public static void erlazioakLangileNagusi() {
 		System.out.println("Sartu nagusiaren kodea:");
-		int nagusiKodea = sc.nextInt();
-		System.out.println("Langileen zerrenda:");
-		System.out.println("1. Iñigo Cabacas, RRPP, i.cbcs@gmail.com");
-		System.out.println("2. Aitor Zabaleta, RRHH, a.zabaleta@gmail.com");
+		String kodeaBilatu = sc.nextLine();
+		boolean aurkituta = false;
+		boolean nagusizerrenda = false;
+		try {
+			FileReader fr = new FileReader("src/erronkaproduktua/fitxategiak/LANGILE.txt");
+			BufferedReader br = new BufferedReader(fr);
+			String lerroa;
+			lerroa = br.readLine();
+			while (lerroa != null) {
+				String[] lerroZatiak = lerroa.split("	");
+				String kodea = lerroZatiak[6];
+				if (kodea.equals(kodeaBilatu)) {
+					if (!nagusizerrenda) {
+						System.out.println("Nagusi kodea: " + kodea);
+						System.out.println("Langile zerrenda:");
+						nagusizerrenda = true;
+					}
+
+					String izena = lerroZatiak[1];
+					String abizena = lerroZatiak[2];
+					String emaila = lerroZatiak[3];
+
+					System.out.println("- " + izena + " " + abizena + " | " + emaila);
+					aurkituta = true;
+				}
+
+				lerroa = br.readLine();
+			}
+
+			if (!aurkituta) {
+				System.out.println("Ez da aurkitu nagusirik hurrengo kodearekin: " + kodeaBilatu);
+			}
+
+			br.close();
+			fr.close();
+
+		} catch (FileNotFoundException e) {
+			System.out.println("Errorea: fitxategia ezin da aurkitu.");
+		} catch (IOException e) {
+			System.out.println("Errorea: fitxategia irakurtzean arazoa.");
+		}
+		System.out.println("Langileen menura itzultzen...");
+		PDAmenu.menuLangileak();
 	}
 
 	public static void kontsultaBezero() {
@@ -86,12 +123,10 @@ public class PDAfuntzionalitateak {
 				if (kodea.equals(kodeaBilatu)) {
 					String izena = lerroZatiak[1];
 					String abizena = lerroZatiak[2];
-//					String helbidea = lerroZatiak[3];
 					String emaila = lerroZatiak[4];
 
 					System.out.println("Izena: " + izena);
 					System.out.println("Abizena: " + abizena);
-//					System.out.println("Helbidea: " + helbidea);
 					System.out.println("Emaila: " + emaila);
 					aurkituta = true;
 					break;
