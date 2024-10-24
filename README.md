@@ -37,9 +37,9 @@ _Aplikazioa hedatzeko, hurrengo pausuak jarraitu behar dira:_
 ## Egileak ✒️
 
 * **Gorka López** - *Programazio nagusia* - [glopezm22](https://github.com/glopezm22)
-* **Gaizka Gorrochategui** - *Programazio-gainbegiralea* - [glopezm22](https://github.com/glopezm22)
-* **Hugo Villate** - *Dokumentazioa* - [glopezm22](https://github.com/glopezm22)
-* **Ander Mardones** - *Laguntzailea* - [glopezm22](https://github.com/glopezm22)
+* **Gaizka Gorrochategui** - *Programazio-gainbegiralea* - [Gaizkagb](https://github.com/Gaizkagb)
+* **Hugo Villate** - *Dokumentazioa* - [huugoo-v](https://github.com/huugoo-v)
+* **Ander Mardones** - *Laguntzailea* - [mardoness](https://github.com/mardoness)
 
 ## Lizentzia 📄
 
